@@ -1,0 +1,45 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: quickstart
+  namespace: elastic-system
+spec:
+  version: 8.11.1
+  count: 1
+  elasticsearchRef:
+    name: quickstart
+  podTemplate:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - monitoring
+      containers:
+      - name: kibana
+        env:
+          - name: SERVER_BASEPATH
+            value: "/kibana"
+          - name: SERVER_REWRITEBASEPATH
+            value: "true"
+          - name: SERVER_PUBLICBASEURL
+            value: "https://www.example.com/kibana"
+        ports:
+        - containerPort: 5601
+          name: https
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /kibana/app/home#
+            port: 5601
+            scheme: HTTPS
+      tolerations:
+      - key: "app"
+        operator: "Equal"
+        value: "monitoring"
+        effect: "NoSchedule"

@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana
+  namespace: elastic-system
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header Cache-Control "max-age=0, no-cache, no-store, must-revalidate";
+    nginx.ingress.kubernetes.io/whitelist-source-range: "X.X.X.X"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: www.example.com
+      http:
+        paths:
+          - path: /kibana
+            pathType: Prefix
+            backend:
+              service:
+                name: quickstart-kb-http
+                port:
+                  number: 5601

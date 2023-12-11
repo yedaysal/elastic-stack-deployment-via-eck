@@ -1,0 +1,57 @@
+apiVersion: beat.k8s.elastic.co/v1beta1
+kind: Beat
+metadata:
+  name: quickstart
+  namespace: elastic-system
+spec:
+  type: filebeat
+  version: 8.11.1
+  elasticsearchRef:
+    name: quickstart
+  config:
+    filebeat.inputs:
+      - type: filestream
+        id: quickstart
+        paths:
+          - /var/log/quickstart/logs/**/*
+    output.elasticsearch:
+      hosts: ["https://quickstart-es-http:9200"]
+      username: "elastic"
+      password: "FWAFWGDAGWAGADFADfagwag"
+  daemonSet:
+    podTemplate:
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - monitoring
+        dnsPolicy: ClusterFirstWithHostNet
+        hostNetwork: true
+        securityContext:
+          runAsUser: 0
+        containers:
+        - name: filebeat
+          resources:
+            limits:
+              cpu: 100m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          volumeMounts:
+          - name: logs
+            mountPath: /var/log/quickstart/logs
+        tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "monitoring"
+          effect: "NoSchedule"
+        volumes:
+        - name: logs
+          persistentVolumeClaim:
+            claimName: logs
