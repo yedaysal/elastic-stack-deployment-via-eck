@@ -40,6 +40,9 @@ spec:
             mountPath: /etc/beat.yml
             subPath: beat.yml
             readOnly: true
+          - name: quickstart-es-http-certs-internal
+            mountPath: /mnt/es-internal-http-certs
+            readOnly: true
         tolerations:
         - key: "app"
           operator: "Equal"
@@ -53,3 +56,8 @@ spec:
           configMap:
             name: filebeat-config
             defaultMode: 0600
+        - name: quickstart-es-http-certs-internal
+          secret:
+            secretName: quickstart-es-http-certs-internal
+            optional: false
+            defaultMode: 420
