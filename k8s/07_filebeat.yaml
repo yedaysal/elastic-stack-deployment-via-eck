@@ -8,16 +8,6 @@ spec:
   version: 8.11.1
   elasticsearchRef:
     name: quickstart
-  config:
-    filebeat.inputs:
-      - type: filestream
-        id: quickstart
-        paths:
-          - /var/log/quickstart/logs/**/*
-    output.elasticsearch:
-      hosts: ["https://quickstart-es-http:9200"]
-      username: "elastic"
-      password: "FWAFWGDAGWAGADFADfagwag"
   daemonSet:
     podTemplate:
       spec:
@@ -46,6 +36,10 @@ spec:
           volumeMounts:
           - name: logs
             mountPath: /var/log/quickstart/logs
+          - name: filebeat-cm
+            mountPath: /etc/beat.yml
+            subPath: beat.yml
+            readOnly: true
         tolerations:
         - key: "app"
           operator: "Equal"
@@ -55,3 +49,7 @@ spec:
         - name: logs
           persistentVolumeClaim:
             claimName: logs
+        - name: filebeat-cm
+          configMap:
+            name: filebeat-config
+            defaultMode: 0600

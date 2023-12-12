@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: elastic-system
+data:
+  beat.yml: |
+    filebeat.inputs:
+    - type: filestream
+      id: quickstart
+      paths:
+      - /var/log/quickstart/logs/**/*
+    output.elasticsearch:
+      hosts: ["https://quickstart-es-http:9200"]
+      api_key: "BHguXYwBRnG09w4sU7zU:42LJCrKUTZuIrMcCSn3VRw"
