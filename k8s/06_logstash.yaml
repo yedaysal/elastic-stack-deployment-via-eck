@@ -25,6 +25,9 @@ spec:
             match => [ "logdate", "YYYY-MM-dd HH:mm:ss,SSS"]
             target => "@timestamp"
           }
+          grok {
+            match => [ "[log][file][path]", "%{UUID:activity_id}" ]
+          }
         }
         output {
           elasticsearch {
