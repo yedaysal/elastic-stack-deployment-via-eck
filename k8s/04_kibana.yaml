@@ -38,6 +38,13 @@ spec:
             path: /kibana/app/home#
             port: 5601
             scheme: HTTPS
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
       tolerations:
       - key: "app"
         operator: "Equal"
