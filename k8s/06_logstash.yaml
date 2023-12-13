@@ -21,10 +21,10 @@ spec:
           grok {
             match => [ "message", "%{TIMESTAMP_ISO8601:logdate}" ]
           }
-         date {
-           match => [ "logdate", "YYYY-MM-dd HH:mm:ss,SSS"]
-           target => "@timestamp"
-         }
+          date {
+            match => [ "logdate", "YYYY-MM-dd HH:mm:ss,SSS"]
+            target => "@timestamp"
+          }
         }
         output {
           elasticsearch {
