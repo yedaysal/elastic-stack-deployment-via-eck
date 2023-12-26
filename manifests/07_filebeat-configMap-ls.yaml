@@ -10,5 +10,10 @@ data:
       id: quickstart
       paths:
       - /var/log/quickstart/logs/**/*
+    - type: aws-s3
+      bucket_arn: arn:aws:s3:::test-s3-bucket
+      access_key_id: CHANGEME
+      secret_access_key: CHANGEME
+      number_of_workers: 5
     output.logstash:
       hosts: ["quickstart-ls-beats:5044"]
