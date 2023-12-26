@@ -17,7 +17,7 @@ data:
       number_of_workers: 5
     output.elasticsearch:
       hosts: ["https://quickstart-es-http:9200"]
-      api_key: "BHguXYwBRnG09w4sU7zU:42LJCrKUTZuIrMcCSn3VRw"
+      api_key: ""
       ssl:
         certificate_authorities: ["/mnt/es-internal-http-certs/ca.crt"]
         certificate: "/mnt/es-internal-http-certs/tls.crt"
