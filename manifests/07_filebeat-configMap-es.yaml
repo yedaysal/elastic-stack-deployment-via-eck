@@ -10,11 +10,23 @@ data:
       id: quickstart
       paths:
       - /var/log/quickstart/logs/**/*
+      parsers:
+      - multiline:
+          type: pattern
+          pattern: '^[0-9]{4}-' # Match lines starting with 4 digits followed by a dash (e.g., "2023-...")
+          negate: true # Match consecutive lines that don't match the pattern
+          match: after # Append consecutive lines that don't match the pattern to the previous line that does match
     - type: aws-s3
       bucket_arn: arn:aws:s3:::test-s3-bucket
       access_key_id: CHANGEME
       secret_access_key: CHANGEME
       number_of_workers: 5
+      parsers:
+      - multiline:
+          type: pattern
+          pattern: '^[0-9]{4}-' # Match lines starting with 4 digits followed by a dash (e.g., "2023-...")
+          negate: true # Match consecutive lines that don't match the pattern
+          match: after # Append consecutive lines that don't match the pattern to the previous line that does match
     output.elasticsearch:
       hosts: ["https://quickstart-es-http:9200"]
       api_key: ""
