@@ -54,13 +54,34 @@ spec:
               targetPort: 5044
   podTemplate:
     spec:
-      volumes:
-        - name: quickstart-es-http-certs-internal
-          secret:
-            secretName: quickstart-es-http-certs-internal
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - monitoring
       containers:
         - name: logstash
+          resources:
+            requests:
+              cpu: 250m
+              memory: 1Gi
+            limits:
+              cpu: 500m
+              memory: 2Gi
           volumeMounts:
             - name: quickstart-es-http-certs-internal
               mountPath: /mnt/es-http-certs-internal
               readOnly: true
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "monitoring"
+          effect: "NoSchedule"
+      volumes:
+        - name: quickstart-es-http-certs-internal
+          secret:
+            secretName: quickstart-es-http-certs-internal
