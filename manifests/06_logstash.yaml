@@ -24,6 +24,7 @@ spec:
           date {
             match => [ "logdate", "YYYY-MM-dd HH:mm:ss,SSS"]
             target => "@timestamp"
+            timezone => "Europe/Istanbul"
           }
           grok {
             match => [ "[log][file][path]", "%{UUID:activity_id}" ]
