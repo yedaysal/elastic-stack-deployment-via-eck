@@ -40,10 +40,10 @@ spec:
             scheme: HTTPS
         resources:
           requests:
-            cpu: 500m
+            cpu: 250m
             memory: 2Gi
           limits:
-            cpu: 1000m
+            cpu: 500m
             memory: 2Gi
       tolerations:
       - key: "app"
