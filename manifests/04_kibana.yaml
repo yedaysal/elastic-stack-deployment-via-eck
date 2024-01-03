@@ -22,12 +22,12 @@ spec:
       containers:
       - name: kibana
         env:
-          - name: SERVER_BASEPATH
-            value: "/kibana"
-          - name: SERVER_REWRITEBASEPATH
-            value: "true"
-          - name: SERVER_PUBLICBASEURL
-            value: "https://www.example.com/kibana"
+        - name: SERVER_BASEPATH
+          value: "/kibana"
+        - name: SERVER_REWRITEBASEPATH
+          value: "true"
+        - name: SERVER_PUBLICBASEURL
+          value: "https://www.example.com/kibana"
         ports:
         - containerPort: 5601
           name: https
