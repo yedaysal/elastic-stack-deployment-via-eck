@@ -22,6 +22,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: quickstart-kb-http
+            name: elastic-kb-http
             port:
               number: 5601

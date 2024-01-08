@@ -1,13 +1,13 @@
 apiVersion: beat.k8s.elastic.co/v1beta1
 kind: Beat
 metadata:
-  name: quickstart
+  name: elastic
   namespace: elastic-system
 spec:
   type: filebeat
   version: 8.11.1
   elasticsearchRef:
-    name: quickstart
+    name: elastic
   daemonSet:
     podTemplate:
       spec:
@@ -35,12 +35,12 @@ spec:
               memory: 1Gi
           volumeMounts:
           - name: logs
-            mountPath: /var/log/quickstart/logs
+            mountPath: /var/log/app/logs
           - name: filebeat-cm
             mountPath: /etc/beat.yml
             subPath: beat.yml
             readOnly: true
-          - name: quickstart-es-http-certs-internal
+          - name: elastic-es-http-certs-internal
             mountPath: /mnt/es-internal-http-certs
             readOnly: true
         tolerations:
@@ -56,8 +56,8 @@ spec:
           configMap:
             name: filebeat-config
             defaultMode: 0600
-        - name: quickstart-es-http-certs-internal
+        - name: elastic-es-http-certs-internal
           secret:
-            secretName: quickstart-es-http-certs-internal
+            secretName: elastic-es-http-certs-internal
             optional: false
             defaultMode: 420

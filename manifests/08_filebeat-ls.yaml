@@ -1,13 +1,13 @@
 apiVersion: beat.k8s.elastic.co/v1beta1
 kind: Beat
 metadata:
-  name: quickstart
+  name: elastic
   namespace: elastic-system
 spec:
   type: filebeat
   version: 8.11.1
   elasticsearchRef:
-    name: quickstart
+    name: elastic
   daemonSet:
     podTemplate:
       spec:
@@ -35,7 +35,7 @@ spec:
               memory: 1Gi
           volumeMounts:
           - name: logs
-            mountPath: /var/log/quickstart/logs
+            mountPath: /var/log/app/logs
           - name: filebeat-cm
             mountPath: /etc/beat.yml
             subPath: beat.yml

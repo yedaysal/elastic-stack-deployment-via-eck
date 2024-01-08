@@ -7,9 +7,9 @@ data:
   beat.yml: |
     filebeat.inputs:
     - type: filestream
-      id: quickstart
+      id: elastic
       paths:
-      - /var/log/quickstart/logs/**/*
+      - /var/log/app/logs/**/*
       parsers:
       - multiline:
           type: pattern
@@ -28,4 +28,4 @@ data:
           negate: true # Match consecutive lines that don't match the pattern
           match: after # Append consecutive lines that don't match the pattern to the previous line that does match
     output.logstash:
-      hosts: ["quickstart-ls-beats:5044"]
+      hosts: ["elastic-ls-beats:5044"]

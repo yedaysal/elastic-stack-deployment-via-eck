@@ -1,13 +1,13 @@
 apiVersion: logstash.k8s.elastic.co/v1alpha1
 kind: Logstash
 metadata:
-  name: quickstart
+  name: elastic
   namespace: elastic-system
 spec:
   count: 1
   elasticsearchRefs:
-  - name: quickstart
-      clusterName: quickstart
+  - name: elastic
+      clusterName: elastic
   version: 8.11.1
   pipelines:
   - pipeline.id: main
@@ -32,12 +32,12 @@ spec:
       }
       output {
         elasticsearch {
-          hosts => [ "https://quickstart-es-http:9200" ]
+          hosts => [ "https://elastic-es-http:9200" ]
           api_key => ""
           ssl_certificate_authorities => '/mnt/es-http-certs-internal/ca.crt'
           data_stream => "true"
           data_stream_type => "logs"
-          data_stream_dataset => "quickstart"
+          data_stream_dataset => "app"
           data_stream_namespace => "logstash"
         }
         stdout { codec => rubydebug }
@@ -74,7 +74,7 @@ spec:
             cpu: 500m
             memory: 2Gi
         volumeMounts:
-        - name: quickstart-es-http-certs-internal
+        - name: elastic-es-http-certs-internal
           mountPath: /mnt/es-http-certs-internal
           readOnly: true
       tolerations:
@@ -83,6 +83,6 @@ spec:
         value: "monitoring"
         effect: "NoSchedule"
       volumes:
-      - name: quickstart-es-http-certs-internal
+      - name: elastic-es-http-certs-internal
         secret:
-          secretName: quickstart-es-http-certs-internal
+          secretName: elastic-es-http-certs-internal
