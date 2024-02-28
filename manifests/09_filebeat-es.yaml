@@ -8,7 +8,7 @@ spec:
   version: 8.11.1
   elasticsearchRef:
     name: elastic
-  daemonSet:
+  deployment:
     podTemplate:
       spec:
         affinity:
@@ -43,6 +43,8 @@ spec:
           - name: elastic-es-http-certs-internal
             mountPath: /mnt/es-internal-http-certs
             readOnly: true
+          - name: filebeat-data
+            mountPath: /usr/share/filebeat/data
         tolerations:
         - key: "app"
           operator: "Equal"
@@ -61,3 +63,6 @@ spec:
             secretName: elastic-es-http-certs-internal
             optional: false
             defaultMode: 420
+        - name: filebeat-data
+          persistentVolumeClaim:
+            claimName: filebeat-pvc
