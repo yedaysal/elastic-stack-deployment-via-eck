@@ -101,10 +101,16 @@ kubectl apply -f 06_logstash.yaml
 kubectl apply -f 07_filebeat-configMap-ls.yaml
 ```
 
-13. Deploy a Filebeat instance:
+13. Create a PersistentVolumeClaim for persisting Filebeat data:
+
+```
+kubectl apply -f 08_filebeat-pvc.yaml
+```
+
+14. Deploy a Filebeat instance:
 
 ```console
-kubectl apply -f 08_filebeat-ls.yaml
+kubectl apply -f 09_filebeat-ls.yaml
 ```
 
 ## Resources
