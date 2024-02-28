@@ -64,7 +64,7 @@ If your Kubernetes cluster does not have any Kubernetes nodes with at least 2GiB
 5. Get and note the default Elasticsearch user's (`elastic`) password:
 
 ```console
-PASSWORD=$(kubectl -n elastic-system get secret quickstart-es-elastic-user -o go-template='{{.data.elastic | base64decode}}') ; echo $PASSWORD
+PASSWORD=$(kubectl -n elastic-system get secret elastic-es-elastic-user -o go-template='{{.data.elastic | base64decode}}') ; echo $PASSWORD
 ```
 
 6. Deploy a Kibana instance:
