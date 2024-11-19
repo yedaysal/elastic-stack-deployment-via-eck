@@ -7,7 +7,7 @@ spec:
   count: 1
   elasticsearchRefs:
   - name: elastic
-      clusterName: elastic
+    clusterName: elastic
   version: 8.11.1
   pipelines:
   - pipeline.id: main
