@@ -33,7 +33,7 @@ spec:
       output {
         elasticsearch {
           hosts => [ "https://elastic-es-http:9200" ]
-          api_key => ""
+          api_key => "CREATE_AN_API_KEY_IN_LOGSTASH_FORMAT_IN_KIBANA_AND_PUT_IT_HERE"
           ssl_certificate_authorities => '/mnt/es-http-certs-internal/ca.crt'
           data_stream => "true"
           data_stream_type => "logs"
